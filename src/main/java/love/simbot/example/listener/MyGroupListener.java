@@ -84,8 +84,6 @@ public class MyGroupListener {
             String res = ApexCraftService.INSTANCE.getAsset(asset, makeDir);
             weeklyMsg += CatImageUtil.INSTANCE.msg(makeDir + res);
         }
-/*        sender.SENDER.sendGroupMsg(groupCode, dailyMsg + "\n" + craftBO.getDailyTime() + "\n"
-                + weeklyMsg + "\n" + craftBO.getWeeklyTime());*/
         sender.SENDER.sendGroupMsg(groupCode, dailyMsg + "\n" + weeklyMsg);    //只显示图片，无时间
         return;
     }
