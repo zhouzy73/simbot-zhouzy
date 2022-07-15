@@ -10,15 +10,14 @@ import love.forte.simbot.filter.MatchType;
 import love.simbot.example.bean.apex.CraftBO;
 import love.simbot.example.common.HelpEnum;
 import love.simbot.example.common.NewsEnum;
-import love.simbot.example.service.ApexCraftService;
-import love.simbot.example.service.DiaryService;
-import love.simbot.example.service.NewsService;
+import love.simbot.example.service.*;
 import love.simbot.example.utils.CatImageUtil;
-import love.simbot.example.service.WeatherService;
+import love.simbot.example.utils.PixivDownloadUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,17 +33,21 @@ public class MyGroupListener {
     private static final Logger LOG = LoggerFactory.getLogger(MyGroupListener.class);
     private static final List<String> groupCodeList = Arrays.asList("523316054", "572860040", "632982611", "518968523");
     private static final String makeDir = "E:/Learning/Simbot/make/";
-    private static final String mapDir = "E:/Learning/Simbot/map";
+    private static final String mapDir = "E:/Learning/Simbot/map/";
+    private static final String pixivDir = "E:/Learning/Simbot/pixiv/";
 
     @OnGroup
-//    @Filter(value = "来点", matchType = MatchType.STARTS_WITH)
-//    @Filter(value = "色图", matchType = MatchType.ENDS_WITH)
-    @Filter(value = "来点{{name}}涩图", matchType = MatchType.REGEX_MATCHES)
-    public void onMsgPicture(GroupMsg msg, @FilterValue("name") String name) {
-        String message = msg.getText();
-        //
-        System.out.println(name + 111111);
-
+    @Filter(value = "来点{{keyword}}", matchType = MatchType.REGEX_MATCHES)
+//    @Filter(value = "来点{{keyword}}涩图", matchType = MatchType.REGEX_MATCHES)
+    public void onMsgPicture(GroupMsg msg, MsgSender sender, @FilterValue("keyword") String keyword) {
+        String groupCode = msg.getGroupInfo().getGroupCode();
+        if (!groupCodeList.contains(groupCode)) {
+            return;
+        }
+        String picName = PixivService.INSTANCE.downloadPicture(keyword, pixivDir);
+        System.out.println(picName);
+        //本地图片发送到群聊
+        return;
     }
 
     @OnGroup
