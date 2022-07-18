@@ -37,16 +37,19 @@ public class MyGroupListener {
     private static final String pixivDir = "E:/Learning/Simbot/pixiv/";
 
     @OnGroup
-    @Filter(value = "来点{{keyword}}", matchType = MatchType.REGEX_MATCHES)
-//    @Filter(value = "来点{{keyword}}涩图", matchType = MatchType.REGEX_MATCHES)
+//    @Filter(value = "来点{{keyword}}", matchType = MatchType.REGEX_MATCHES)
+    @Filter(value = "来点{{keyword}}色图", matchType = MatchType.REGEX_MATCHES)
     public void onMsgPicture(GroupMsg msg, MsgSender sender, @FilterValue("keyword") String keyword) {
         String groupCode = msg.getGroupInfo().getGroupCode();
         if (!groupCodeList.contains(groupCode)) {
             return;
         }
-        String picName = PixivService.INSTANCE.downloadPicture(keyword, pixivDir);
-        System.out.println(picName);
+        PixivService pixivService = PixivService.INSTANCE;
+        String id = pixivService.getPictureId(keyword);
+        String picPath = pixivService.downloadPicture(id, pixivDir);
+        String catMsg = CatImageUtil.INSTANCE.msg(picPath);
         //本地图片发送到群聊
+        sender.SENDER.sendGroupMsg(groupCode, "原图地址 https://www.pixiv.net/artworks/" + id + "\n" + catMsg);
         return;
     }
 

@@ -16,26 +16,25 @@ public enum  PixivService {
     private static final String artworksUrl = "https://www.pixiv.net/ajax/search/artworks/";
     //model:分级 all/safe/r18     p:页码    order:排序 date/date_d
     //s_model: s_tag/s_type
-    private static final String artworksUrlEnd = "?mode=all&p=1&type=all&lang=zh&s_mode=s_tag&order=date_d&word=";
+    private static final String artworksUrlEnd = "?mode=r18&p=1&type=all&lang=zh&s_mode=s_tag&order=date_d&word=";
 
     private static final String DEFAULT = "当前图片功能出错啦";
     private static final String DEFAULT_DOWNLOAD = "图片下载时出错啦";
 
     //将图片下载到本地
-    public String downloadPicture(String keyword, String path) {
-        String id = getPictureId(keyword);
-        String url = getPictureUrl(id);
+    public String downloadPicture(String picId, String path) {
+        String url = getPictureUrl(picId);
         if (url.equals("")) {
             System.out.println("未找到图片！");
             return DEFAULT_DOWNLOAD;
         }
         String pictureType = getPictureType(url);
-        String fileName = path + id + "_p0." + pictureType;
+        String fileName = path + picId + "_p0." + pictureType;
         // 判断是否已有同名文件，减少下载次数
         File file = new File(fileName);
         if (file.exists()) {
             System.out.println("文件已存在！");
-            return DEFAULT_DOWNLOAD;
+            return fileName;
         }
         PixivDownloadUtil downloadUtil = new PixivDownloadUtil();
         try {
@@ -67,6 +66,8 @@ public enum  PixivService {
             }
             //获取第二张图片
             String id = krBean.getBody().getIllustManga().getData().get(1).getId();
+            //待优化，https://www.pixiv.net/ajax/illust/99569754?ref=https%3A%2F%2Fwww.pixiv.net%2Ftags%2F%25E4%25BA%2591%25E9%259F%25B5%2Fartworks%3Fs_mode%3Ds_tag&lang=zh
+            //遍历 krBean.getBody().getIllustManga().getData() ，使用此接口对热度进行筛选
             return id;
         }
         return DEFAULT;
