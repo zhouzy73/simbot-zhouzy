@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public enum  HelpEnum {
+    HELP_PIXIV("0000", "来点**色图（例：来点原神色图）"),
     HELP_WEATHER("0001", "查询天气（例：济宁天气）"),
     HELP_NEWS("0002", "新闻（例：百度新闻）（类型：百度/国内/全网/NBA）"),
     HELP_DIARY("0003", "舔狗日记（例：舔狗日记）"),

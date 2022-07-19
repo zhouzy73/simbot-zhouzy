@@ -46,6 +46,7 @@ public class MyGroupListener {
         }
         PixivService pixivService = PixivService.INSTANCE;
         String id = pixivService.getPictureId(keyword);
+        System.out.println("当前id：" + id);
         String picPath = pixivService.downloadPicture(id, pixivDir);
         String catMsg = CatImageUtil.INSTANCE.msg(picPath);
         //本地图片发送到群聊
