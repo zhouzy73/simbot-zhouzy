@@ -17,7 +17,7 @@ public enum  PixivService {
     private static final String artworksUrl = "https://www.pixiv.net/ajax/search/artworks/";
     //model:分级 all/safe/r18     p:页码    order:排序 date/date_d/popular_d/popular_male_d/popular_female_d
     //s_model: s_tag/s_type
-    private static final String artworksUrlEnd = "?mode=all&p=1&type=all&lang=zh&s_mode=s_tag&order=popular_d&word=";
+    private static final String artworksUrlEnd = "?mode=safe&p=1&type=all&lang=zh&s_mode=s_tag&order=popular_d&word=";
 
     private static final String DEFAULT = "当前图片功能出错啦";
     private static final String DEFAULT_DOWNLOAD = "图片下载时出错啦";
