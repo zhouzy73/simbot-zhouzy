@@ -17,7 +17,7 @@ public enum  PixivService {
     private static final String artworksUrl = "https://www.pixiv.net/ajax/search/artworks/";
     //model:分级 all/safe/r18     p:页码    order:排序 date/date_d/popular_d/popular_male_d/popular_female_d
     //s_model: s_tag/s_type
-    private static final String artworksUrlEnd = "?mode=safe&p=1&type=all&lang=zh&s_mode=s_tag&order=popular_d&word=";
+    private static final String artworksUrlEnd = "?mode=r18&p=1&type=all&lang=zh&s_mode=s_tag&order=popular_d&word=";
 
     private static final String DEFAULT = "当前图片功能出错啦";
     private static final String DEFAULT_DOWNLOAD = "图片下载时出错啦";
@@ -67,9 +67,12 @@ public enum  PixivService {
             }
             //获取第二张图片
             Random random = new Random();
-            String id = krBean.getBody().getIllustManga().getData().get(random.nextInt(6)).getId();
-            //待优化，https://www.pixiv.net/ajax/illust/99569754?ref=https%3A%2F%2Fwww.pixiv.net%2Ftags%2F%25E4%25BA%2591%25E9%259F%25B5%2Fartworks%3Fs_mode%3Ds_tag&lang=zh
-            //遍历 krBean.getBody().getIllustManga().getData() ，使用此接口对热度进行筛选
+            String id = "";
+            if (krBean.getBody().getIllustManga().getData().size() >= 50) {
+                id = krBean.getBody().getIllustManga().getData().get(random.nextInt(20)).getId();
+            } else {
+                id = krBean.getBody().getIllustManga().getData().get(krBean.getBody().getIllustManga().getData().size()-1).getId();
+            }
             return id;
         }
         return DEFAULT;

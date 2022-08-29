@@ -84,10 +84,10 @@ public class MyPrivateListener {
 
     }
 
-/*    @Listen(PrivateMsg.class)   //同 @OnPrivate
+    @Listen(PrivateMsg.class)   //同 @OnPrivate
     public void fudu(PrivateMsg msg, Sender sender) {
         sender.sendPrivateMsg(msg, msg.getMsgContent());
         sender.sendPrivateMsg(msg, "hhh");
-    }*/
+    }
 
 }
